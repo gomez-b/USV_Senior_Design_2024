@@ -8,7 +8,10 @@ import matplotlib.pyplot as plt
 import folium
 
 # Read the CSV file containing the coordinates
-df = pd.read_csv('/Users/briangomez/downloads/python_estuary - Sheet1.csv')
+df = pd.read_csv('/Users/briangomez/downloads/coordinates_estuary - Sheet1.csv')
+
+# Remove duplicates
+df.drop_duplicates(subset=['latitude', 'longitude'], inplace=True)
 
 # Create a Folium map centered at the mean of latitude and longitude
 mymap = folium.Map(location=[df['latitude'].mean(), df['longitude'].mean()], zoom_start=100)
@@ -25,7 +28,8 @@ folium.PolyLine(locations=df[['latitude', 'longitude']].values.tolist(), color='
 mymap.save('/Users/briangomez/downloads/na.html')
 
 # Plot the scatter plot
-ax = df.plot(x="longitude", y="latitude", kind="scatter", color="green", alpha=1, colormap="ocean", label="Coordinate")
+
+ax = df.plot(x="longitude", y="latitude", kind="scatter", color="green", alpha=1, label="Coordinate")
 
 # Plot the first point separately
 first_longitude = df['longitude'].iloc[0]
@@ -42,10 +46,17 @@ for row in df[::-1].itertuples():
                     arrowprops=dict(arrowstyle="->", linewidth=1), color='b')
     prev = row
 
+# Add north arrow
+x, y, arrow_length = 0.10, 0.15, 0.085
+ax.annotate('N', xy=(x, y), xytext=(x, y-arrow_length),
+            arrowprops=dict(facecolor='black', width=2, headwidth=8),
+            ha='center', va='center', fontsize=15,
+            xycoords=ax.transAxes)
+
 # Set plot title and labels
-ax.set_title('Coverage Path Planning: The Boustrophedon', fontweight='bold')
-ax.set_xlabel('Longitude', fontweight='bold')
-ax.set_ylabel('Latitude', fontweight='bold')
+ax.set_title('Russian River Estuary', fontweight='bold',fontsize =20)
+ax.set_xlabel('Longitude', fontweight='bold',fontsize =20 )
+ax.set_ylabel('Latitude', fontweight='bold',fontsize =20)
 
 # Show the legend
 plt.legend()
