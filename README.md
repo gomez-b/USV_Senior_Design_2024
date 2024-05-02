@@ -1,5 +1,6 @@
 Repository contains:  
 //***************************//
+Authors: Brian Gomez Jimenez & Flor Luna
 Program for ARDUINO MEGA 2560 and flight controller with UART serial communication to request DATE,TIME,LATITUDE,LONGITUDE.
 There is code for Vernier Temp and Salinity Sensor.
 With it aswell is PING2 Sonar that uses UART to receive the distance measured.
